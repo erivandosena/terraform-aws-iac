@@ -1,6 +1,6 @@
 # https://developer.hashicorp.com/terraform/language/data-sources
 
-data "aws_ami" "ubuntu" {
+data "aws_ami" "ubuntu-east1" {
   most_recent = true
 
   filter {
@@ -8,14 +8,38 @@ data "aws_ami" "ubuntu" {
     values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 
-  owners = ["099720109477"] # Ubuntu
+  owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "vm-web" {
-  ami           = data.aws_ami.ubuntu.id
+# Multi-Region
+data "aws_ami" "ubuntu-east2" {
+  provider = aws.ohio
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  owners = ["099720109477"]
+}
+
+resource "aws_instance" "vm-web-east1" {
+  ami           = data.aws_ami.ubuntu-east1.id
   instance_type = "t2.micro"
 
   tags = {
-    Name = "Elastic Compute Cloud - AWS EC2"
+    Name = "AWS EC2 - US East (N. Virginia)"
+  }
+}
+
+resource "aws_instance" "vm-web-east2" {
+  provider = aws.ohio
+
+  ami           = data.aws_ami.ubuntu-east2.id
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "AWS EC2 - US East (Ohio)"
   }
 }
