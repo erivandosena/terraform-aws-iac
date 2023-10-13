@@ -1,5 +1,5 @@
-# https://developer.hashicorp.com/terraform/language/expressions/types
 # https://developer.hashicorp.com/terraform/language/expressions/references
+# https://developer.hashicorp.com/terraform/language/expressions/types
 # https://developer.hashicorp.com/terraform/language/values/outputs
 
 output "ip_address" {
@@ -8,4 +8,8 @@ output "ip_address" {
 
 output "dns_name" {
   value = aws_instance.vm-web.public_dns
+}
+
+output "aws_zone" {
+  value = aws_instance.vm-web.availability_zone
 }
