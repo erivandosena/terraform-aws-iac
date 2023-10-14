@@ -2,7 +2,6 @@
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 # https://developer.hashicorp.com/terraform/language/providers/configuration#alias-multiple-provider-configurations
 
-
 provider "aws" {
   region  = "us-east-1"
 }
@@ -18,5 +17,6 @@ terraform {
     bucket = "terraform-state-bucket-erivandosena"
     key    = "terraform-erivando-test.tfstate"
     region = "us-east-1"
+    encrypt = false
   }
 }
