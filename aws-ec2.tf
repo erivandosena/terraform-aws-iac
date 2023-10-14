@@ -26,10 +26,10 @@ data "aws_ami" "ubuntu-east2" {
 
 resource "aws_instance" "vm-web-east1" {
   ami           = data.aws_ami.ubuntu-east1.id
-  instance_type = "t2.micro"
-
+  instance_type = var.instance_type
+  availability_zone = var.tag_name_east1_az
   tags = {
-    Name = "AWS EC2 - US East (N. Virginia)"
+    Name = var.tag_name_east1
   }
 }
 
@@ -37,9 +37,9 @@ resource "aws_instance" "vm-web-east2" {
   provider = aws.ohio
 
   ami           = data.aws_ami.ubuntu-east2.id
-  instance_type = "t2.micro"
-
+  instance_type = var.instance_type
+  availability_zone = var.tag_name_east2_az
   tags = {
-    Name = "AWS EC2 - US East (Ohio)"
+    Name = var.tag_name_east2
   }
 }
